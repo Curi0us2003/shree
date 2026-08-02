@@ -1,198 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Happy Friendship Day — Our Scrapbook</title>
-<meta name="description" content="A handcrafted scrapbook of our friendship." />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Friendship Day</title>
+<meta name="description" content="A quiet, cinematic scrapbook for a friendship worth celebrating.">
 
-<!-- Google Fonts: Fraunces (headings), Work Sans (body), Caveat (handwritten notes) -->
+<!-- ============================================================
+     FONTS
+     Cormorant Garamond -> display / headline serif (elegant, warm)
+     Jost                -> body / UI sans (clean, minimal)
+     Caveat               -> handwritten letter section only
+     ============================================================ -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@300;400;500;600&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500;600&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- Scroll progress bar (looks like a filling coffee-stain ribbon) -->
-<div class="scroll-progress" aria-hidden="true"><div class="scroll-progress__fill" id="scrollFill"></div></div>
+<!-- ============================================================
+     LOADING SCREEN
+     ============================================================ -->
+<div class="loading-screen" id="loadingScreen" aria-hidden="true">
+  <div class="loading-mark">
+    <svg width="46" height="46" viewBox="0 0 46 46" fill="none">
+      <path d="M23 40C23 40 4 28.5 4 15.8C4 9.3 9.2 4 15.6 4C19.2 4 22.4 5.7 23 8.4C23.6 5.7 26.8 4 30.4 4C36.8 4 42 9.3 42 15.8C42 28.5 23 40 23 40Z" stroke="#5A4B3C" stroke-width="1.4" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <p class="loading-text">gathering the little things&hellip;</p>
+</div>
 
-<!-- Film grain overlay, sits above everything, pointer-events none -->
-<canvas id="grainCanvas" class="grain-overlay" aria-hidden="true"></canvas>
-
-<!-- Cursor glow, follows mouse like a warm firefly -->
+<!-- Cursor glow, follows pointer on desktop -->
 <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
 
-<!-- ============ LOADING SCREEN ============ -->
-<div id="loadingScreen" class="loading-screen" role="status" aria-live="polite">
-  <div class="loading-screen__book">
-    <div class="loading-screen__cover loading-screen__cover--left"></div>
-    <div class="loading-screen__cover loading-screen__cover--right"></div>
-    <div class="loading-screen__pages">
-      <p class="loading-screen__label">opening an old scrapbook…</p>
-    </div>
+<!-- Ambient layer: leaves, fireflies, butterflies drift across the whole page -->
+<div class="ambient-layer" id="ambientLayer" aria-hidden="true"></div>
+
+<!-- Section progress dots -->
+<nav class="scroll-nav" id="scrollNav" aria-label="Section navigation">
+  <button data-target="hero" aria-label="Opening" class="active"></button>
+  <button data-target="story" aria-label="Our Story"></button>
+  <button data-target="gallery" aria-label="Memory Gallery"></button>
+  <button data-target="qualities" aria-label="Things I Like About You"></button>
+  <button data-target="letter" aria-label="A Letter"></button>
+  <button data-target="little-things" aria-label="Little Things"></button>
+  <button data-target="nature" aria-label="Nature"></button>
+  <button data-target="adventure" aria-label="Next Adventure"></button>
+  <button data-target="wall" aria-label="Message Wall"></button>
+  <button data-target="ending" aria-label="Ending"></button>
+</nav>
+
+<!-- ============================================================
+     SECTION 1 — OPENING
+     ============================================================ -->
+<section id="hero" class="section hero">
+  <canvas id="particles" class="particles-canvas"></canvas>
+  <div class="hero-content">
+    <p class="eyebrow">a small, quiet celebration of</p>
+    <h1 class="hero-title">Happy Friendship Day</h1>
+    <p class="hero-subtitle">For the person who unknowingly became one of my favourite chapters.</p>
+    <button class="begin-btn" id="beginBtn">
+      <span>Begin</span>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2V14M8 14L3 9M8 14L13 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
   </div>
-  <div class="loading-screen__dust" id="dustContainer" aria-hidden="true"></div>
-  <button id="soundToggle" class="sound-toggle" aria-pressed="false" aria-label="Toggle ambient sound">
-    <span class="sound-toggle__icon">♪</span> ambience: off
-  </button>
+  <div class="hero-scroll-hint">scroll</div>
+</section>
+
+<!-- ============================================================
+     SECTION 2 — OUR STORY (timeline)
+     ============================================================ -->
+<section id="story" class="section story">
+  <div class="section-head reveal">
+    <p class="eyebrow">chapter one</p>
+    <h2>Our Story</h2>
+    <p class="section-sub">The parts I keep going back to.</p>
+  </div>
+
+  <div class="timeline" id="timeline">
+    <!-- timeline items injected by script.js from a data array -->
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 3 — MEMORY GALLERY
+     ============================================================ -->
+<section id="gallery" class="section gallery">
+  <div class="section-head reveal">
+    <p class="eyebrow">chapter two</p>
+    <h2>Memory Gallery</h2>
+    <p class="section-sub">A scattered, unsorted collection. Click on anything.</p>
+  </div>
+
+  <div class="masonry" id="masonry">
+    <!-- gallery tiles injected by script.js -->
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+  <button class="lightbox-nav prev" id="lightboxPrev" aria-label="Previous">&#8249;</button>
+  <div class="lightbox-frame">
+    <div class="lightbox-image" id="lightboxImage"></div>
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
+  <button class="lightbox-nav next" id="lightboxNext" aria-label="Next">&#8250;</button>
 </div>
 
-<!-- ============ MUSIC PLAYER (floating, glassmorphism) ============ -->
-<div class="music-player" id="musicPlayer">
-  <button class="music-player__toggle" id="musicToggle" aria-label="Play or pause music">
-    <span id="musicIcon">▶</span>
-  </button>
-  <div class="music-player__body">
-    <p class="music-player__track" id="musicTrackName">Song that reminds me of you</p>
-    <div class="music-player__bar" id="musicProgressBar">
-      <div class="music-player__bar-fill" id="musicProgressFill"></div>
-    </div>
-    <div class="music-player__controls">
-      <button id="prevTrack" aria-label="Previous track">⏮</button>
-      <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5" aria-label="Volume">
-      <button id="nextTrack" aria-label="Next track">⏭</button>
-    </div>
+<!-- ============================================================
+     SECTION 4 — THINGS I LIKE ABOUT YOU
+     ============================================================ -->
+<section id="qualities" class="section qualities">
+  <div class="section-head reveal">
+    <p class="eyebrow">chapter three</p>
+    <h2>Things I Like About You</h2>
+    <p class="section-sub">In no particular order, because there isn't one.</p>
   </div>
-  <audio id="musicAudio" loop preload="auto">
-    <source src="audio/friend.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
+
+  <div class="qualities-grid" id="qualitiesGrid">
+    <!-- injected by script.js -->
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 5 — A LETTER
+     ============================================================ -->
+<section id="letter" class="section letter">
+  <div class="letter-paper reveal">
+    <p class="letter-heading">A letter, mostly overdue</p>
+    <div class="letter-body" id="letterBody"></div>
+    <p class="letter-sign">&mdash; written slowly, meant sincerely</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 6 — LITTLE THINGS
+     ============================================================ -->
+<section id="little-things" class="section little-things">
+  <div class="section-head reveal">
+    <p class="eyebrow">chapter four</p>
+    <h2>Little Things</h2>
+    <p class="section-sub">Press one. See what comes up.</p>
+  </div>
+
+  <div class="little-things-grid" id="littleThingsGrid">
+    <!-- injected by script.js -->
+  </div>
+</section>
+
+<!-- Floating modal for little things -->
+<div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+  <div class="modal-card">
+    <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+    <p class="modal-eyebrow" id="modalEyebrow"></p>
+    <p class="modal-text" id="modalText"></p>
+  </div>
 </div>
 
-<main id="mainContent">
+<!-- ============================================================
+     SECTION 7 — NATURE (parallax)
+     ============================================================ -->
+<section id="nature" class="section nature">
+  <div class="nature-bg" id="natureBg"></div>
+  <div class="nature-overlay"></div>
+  <blockquote class="nature-quote reveal">
+    Welcome to the real world. <br> It sucks. <br> You're gonna love it
+  </blockquote>
+</section>
 
-  <!-- ============ SECTION 1 — HERO ============ -->
-  <section class="hero" id="hero">
-    <canvas id="particleCanvas" class="hero__particles" aria-hidden="true"></canvas>
-    <div class="hero__leaves" id="leavesContainer" aria-hidden="true"></div>
-    <div class="hero__butterflies" id="butterflyContainer" aria-hidden="true"></div>
-    <div class="hero__light-leak" aria-hidden="true"></div>
-    <div class="hero__content">
-      <span class="eyebrow eyebrow--tape">a keepsake, for you</span>
-      <h1 class="hero__title">Happy Friendship Day</h1>
-      <p class="hero__subtitle">For the person who unknowingly became one of my favourite chapters.</p>
-      <a href="#story" class="btn btn--paper" id="beginBtn">
-        <span class="btn--paper__arrow">↓</span> Begin Our Story
-      </a>
-    </div>
-  </section>
-
-  <!-- ============ SECTION 2 — OUR STORY (timeline) ============ -->
-  <section class="story" id="story">
-    <header class="section-header">
-      <span class="eyebrow">chapter one</span>
-      <h2 class="section-title">Our Story</h2>
-      <p class="section-lede">Pages from a book only the two of us have read.</p>
-    </header>
-
-    <div class="timeline" id="timeline"><!-- populated by script.js --></div>
-  </section>
-
-  <!-- ============ SECTION 3 — MEMORY GALLERY ============ -->
-  <section class="gallery" id="gallery">
-    <header class="section-header">
-      <span class="eyebrow">chapter two</span>
-      <h2 class="section-title">Memory Gallery</h2>
-      <p class="section-lede">A corkboard of everything I didn't want to forget.</p>
-    </header>
-    <div class="masonry" id="masonryGrid"><!-- populated by script.js --></div>
-  </section>
-
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
-    <button class="lightbox__close" id="lightboxClose" aria-label="Close photo viewer">✕</button>
-    <button class="lightbox__nav lightbox__nav--prev" id="lightboxPrev" aria-label="Previous photo">‹</button>
-    <figure class="lightbox__figure">
-      <img id="lightboxImg" src="" alt="" />
-      <figcaption id="lightboxCaption"></figcaption>
-    </figure>
-    <button class="lightbox__nav lightbox__nav--next" id="lightboxNext" aria-label="Next photo">›</button>
+<!-- ============================================================
+     SECTION 9 — PICK OUR NEXT ADVENTURE
+     ============================================================ -->
+<section id="adventure" class="section adventure">
+  <div class="section-head reveal">
+    <p class="eyebrow">chapter six</p>
+    <h2>Pick Our Next Adventure</h2>
+    <p class="section-sub">Say when, and what. I'll clear my calendar.</p>
   </div>
 
-  <!-- ============ SECTION 4 — THINGS I ADMIRE ============ -->
-  <section class="admire" id="admire">
-    <header class="section-header">
-      <span class="eyebrow">chapter three</span>
-      <h2 class="section-title">Things I Admire About You</h2>
-      <p class="section-lede">Small, ordinary things that turned out to be everything.</p>
-    </header>
-    <div class="admire__grid" id="admireGrid"><!-- populated by script.js --></div>
-  </section>
-
-  <!-- ============ SECTION 5 — THE LETTER ============ -->
-  <section class="letter" id="letter">
-    <header class="section-header">
-      <span class="eyebrow">chapter four</span>
-      <h2 class="section-title">A Letter</h2>
-    </header>
-    <div class="letter__paper">
-      <p class="letter__text" id="letterText"></p>
-      <span class="letter__cursor" id="letterCursor" aria-hidden="true">|</span>
-      <p class="letter__signoff">— always, your friend</p>
-    </div>
-  </section>
-
-  <!-- ============ SECTION 6 — LITTLE THINGS ============ -->
-  <section class="little-things" id="little-things">
-    <header class="section-header">
-      <span class="eyebrow">chapter five</span>
-      <h2 class="section-title">Little Things</h2>
-      <p class="section-lede">Tap a tab. Open a thought.</p>
-    </header>
-    <div class="notebook-tabs" id="notebookTabs"><!-- populated by script.js --></div>
-  </section>
-
-  <div class="paper-modal" id="paperModal" role="dialog" aria-modal="true" hidden>
-    <div class="paper-modal__sheet">
-      <button class="paper-modal__close" id="paperModalClose" aria-label="Close note">✕</button>
-      <h3 id="paperModalTitle"></h3>
-      <p id="paperModalBody"></p>
-    </div>
-  </div>
-
-  <!-- ============ SECTION 7 — NATURE PARALLAX ============ -->
-  <section class="nature" id="nature">
-    <div class="nature__layer nature__layer--sky"></div>
-    <div class="nature__layer nature__layer--sun"></div>
-    <div class="nature__layer nature__layer--mountains-far"></div>
-    <div class="nature__layer nature__layer--mountains-near"></div>
-    <div class="nature__layer nature__layer--forest"></div>
-    <div class="nature__fireflies" id="firefliesContainer" aria-hidden="true"></div>
-    <div class="nature__birds" id="birdsContainer" aria-hidden="true"></div>
-    <blockquote class="nature__quote">
-      Welcome to the real world. <br> It sucks. <br> You're gonna love it
-    </blockquote>
-  </section>
-
-  <!-- ============ SECTION 9 — PICK OUR NEXT ADVENTURE ============ -->
-  <section class="adventure" id="adventure">
-    <header class="section-header">
-      <span class="eyebrow">chapter seven</span>
-      <h2 class="section-title">Pick Our Next Adventure</h2>
-      <p class="section-lede">The café reservation book, reopened.</p>
-    </header>
-
-    <form class="reservation" id="reservationForm" novalidate>
-      <div class="reservation__row">
-        <label for="rName">Name</label>
-        <input type="text" id="rName" name="name" required placeholder="Your name" />
+  <form class="adventure-form reveal" id="adventureForm">
+    <div class="form-row">
+      <div class="form-field">
+        <label for="advName">Your name</label>
+        <input type="text" id="advName" name="name" placeholder="e.g. Prapti" required>
       </div>
-      <div class="reservation__row reservation__row--split">
-        <div>
-          <label for="rDate">Date</label>
-          <input type="date" id="rDate" name="date" required />
-        </div>
-        <div>
-          <label for="rTime">Time</label>
-          <input type="time" id="rTime" name="time" required />
-        </div>
-      </div>
-      <div class="reservation__row">
-        <label for="rActivity">Activity</label>
-        <select id="rActivity" name="activity" required>
-          <option value="" disabled selected>Choose one…</option>
+      <div class="form-field">
+        <label for="advActivity">Activity</label>
+        <select id="advActivity" name="activity" required>
+          <option value="" disabled selected>Choose one</option>
           <option>Coffee</option>
           <option>Dinner</option>
           <option>Long Drive</option>
@@ -201,48 +199,142 @@
           <option>Bookstore</option>
           <option>Movie</option>
           <option>Random Adventure</option>
-          <option value="Custom">Custom</option>
+          <option>Custom</option>
         </select>
       </div>
-      <div class="reservation__row">
-        <label for="rLocation">Location</label>
-        <input type="text" id="rLocation" name="location" placeholder="Our usual spot?" />
+    </div>
+
+    <div class="form-row" id="customActivityRow" hidden>
+      <div class="form-field full">
+        <label for="advCustomActivity">What did you have in mind?</label>
+        <input type="text" id="advCustomActivity" name="customActivity" placeholder="Describe your custom plan">
       </div>
-      <div class="reservation__row">
-        <label for="rNotes">Notes</label>
-        <textarea id="rNotes" name="notes" rows="3" placeholder="Anything else worth noting…"></textarea>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label for="advDate">Date</label>
+        <input type="date" id="advDate" name="date" required>
       </div>
-      <button type="submit" class="btn btn--paper">Reserve the Date</button>
-      <p class="reservation__status" id="reservationStatus" role="status" aria-live="polite"></p>
-    </form>
-  </section>
+      <div class="form-field">
+        <label for="advTime">Time</label>
+        <input type="time" id="advTime" name="time" required>
+      </div>
+    </div>
 
-  <!-- ============ SECTION 10 — MESSAGE WALL ============ -->
-  <section class="wall" id="wall">
-    <header class="section-header">
-      <span class="eyebrow">chapter eight</span>
-      <h2 class="section-title">Message Wall</h2>
-      <p class="section-lede">Leave a note on the corkboard.</p>
-    </header>
+    <div class="form-row">
+      <div class="form-field full">
+        <label for="advLocation">Location</label>
+        <input type="text" id="advLocation" name="location" placeholder="Any place that comes to mind">
+      </div>
+    </div>
 
-    <form class="wall__form" id="wallForm">
-      <input type="text" id="wallName" placeholder="Your name" maxlength="24" required />
-      <select id="wallEmoji" aria-label="Choose an emoji">
-        <option>💛</option><option>☕</option><option>🌿</option><option>✨</option>
-        <option>📸</option><option>🎧</option><option>🍂</option><option>😂</option>
-      </select>
-      <input type="text" id="wallMessage" placeholder="Leave a little note…" maxlength="140" required />
-      <button type="submit" class="btn btn--small">Pin it</button>
-    </form>
+    <div class="form-row">
+      <div class="form-field full">
+        <label for="advNotes">Notes</label>
+        <textarea id="advNotes" name="notes" rows="3" placeholder="Anything else worth mentioning"></textarea>
+      </div>
+    </div>
 
-    <div class="corkboard" id="corkboard" aria-live="polite"><!-- notes populate here --></div>
-  </section>
+    <button type="submit" class="submit-btn">
+      <span>Lock it in</span>
+    </button>
+    <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+  </form>
 
-  <!-- ============ SECTION 12 — ENDING ============ -->
-  <section class="ending" id="ending">
-    <div class="ending__sky"></div>
-    <div class="ending__fireflies" id="endingFireflies" aria-hidden="true"></div>
-    <div class="ending__stars" id="endingStars" aria-hidden="true"></div>
+  <div class="adventure-log reveal" id="adventureLog" hidden>
+    <p class="adventure-log-title">Plans saved on this device</p>
+    <div class="adventure-log-list" id="adventureLogList"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 10 — MESSAGE WALL
+     ============================================================ -->
+<section id="wall" class="section wall">
+  <div class="section-head reveal">
+    <p class="eyebrow">chapter seven</p>
+    <h2>Message Wall</h2>
+    <p class="section-sub">Leave something behind. A note, a joke, an emoji will do.</p>
+  </div>
+
+  <form class="wall-form reveal" id="wallForm">
+    <div class="form-row">
+      <div class="form-field">
+        <label for="wallName">Name</label>
+        <input type="text" id="wallName" name="wallName" placeholder="Your name" required>
+      </div>
+      <div class="form-field emoji-field">
+        <label for="wallEmoji">Emoji</label>
+        <select id="wallEmoji" name="wallEmoji">
+          <option value="🌿">🌿</option>
+          <option value="✨">✨</option>
+          <option value="🍃">🍃</option>
+          <option value="🌙">🌙</option>
+          <option value="☕">☕</option>
+          <option value="🦋">🦋</option>
+          <option value="💛">💛</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field full">
+        <label for="wallMessage">Message</label>
+        <textarea id="wallMessage" name="wallMessage" rows="2" placeholder="Say something" required></textarea>
+      </div>
+    </div>
+    <button type="submit" class="submit-btn">
+      <span>Pin it to the wall</span>
+    </button>
+  </form>
+
+  <div class="sticky-wall" id="stickyWall"></div>
+</section>
+
+<!-- ============================================================
+     SECTION 11 — MUSIC (floating, global element)
+     ============================================================ -->
+<div class="music-player" id="musicPlayer">
+  <button class="music-toggle" id="musicToggle" aria-label="Play ambient music">
+    <svg id="musicIconPlay" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+      <path d="M4 2.5v11l10-5.5-10-5.5z"/>
+    </svg>
+
+    <svg id="musicIconPause" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="display:none">
+      <rect x="3.5" y="2.5" width="3" height="11"/>
+      <rect x="9.5" y="2.5" width="3" height="11"/>
+    </svg>
+  </button>
+
+  <div class="music-info">
+    <span class="music-title">A track that reminds me of you</span>
+    <div class="music-bars">
+      <i></i><i></i><i></i><i></i>
+    </div>
+  </div>
+
+  <input
+    type="range"
+    id="musicVolume"
+    class="music-volume"
+    min="0"
+    max="100"
+    value="40"
+    aria-label="Volume"
+  >
+
+  <audio id="musicAudio" loop preload="auto">
+    <source src="audio/friend.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+</div>
+
+<!-- ============================================================
+     SECTION 12 — ENDING
+     ============================================================ -->
+<section id="ending" class="section ending">
+  <div class="ending-stars" id="endingStars"></div>
+  <div class="ending-content reveal">
     <p class="ending__text">
       Thank you<br>
       for becoming<br>
@@ -253,11 +345,8 @@
       They simply become the place you quietly return to.
       </span>
     </p>
-    <p class="ending__final">Happy Friendship Day ❤️</p>
-    <div class="ending__book-close" aria-hidden="true"></div>
-  </section>
-
-</main>
+  </div>
+</section>
 
 <script src="script.js"></script>
 </body>
